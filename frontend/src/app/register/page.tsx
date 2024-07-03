@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import styles from './register.module.css';
 
 
-const Register = () => {
+export default function Register ()  {
   const [fullname, setfullname] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
