@@ -22,7 +22,9 @@ app.use('/api/shop',shopRoute)
 =======
 app.use(express.json({limit:'500mb'}));
 app.use(express.urlencoded({extended:true, limit:'500mb'}));
-app.use(express.static(__dirname + '/../client/dist'))
+app.use(express.static(__dirname + '/../client/dist'));
+app.use("/api/shop",shopRoute);
+app.use("/api/user",userRoute);
 
 >>>>>>> 869d9757c5c53e59cea59c39e9f456f47d55c49a
 
