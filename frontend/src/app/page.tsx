@@ -17,8 +17,31 @@ const Home: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
 
-      {/* Swiper Carousel */}
-      <div className="swiper-container">
+      
+
+      {/* Description */}
+      <div className="max-w-4xl mx-auto p-8">
+        <h2 className="text-2xl font-bold mb-4">Welcome to We Review!</h2>
+        <p className="mb-4">
+          Discover the best spots in town with We Review, your ultimate destination for honest and
+          comprehensive reviews on coffee shops, restaurants, and bars. Whether you're a coffee
+          connoisseur, a foodie looking for the next great dining experience, or someone searching
+          for the perfect night out, We Review has got you covered.
+        </p>
+        <p className="mb-4">
+          Our team of expert reviewers visits and evaluates each venue, ensuring you get detailed
+          insights into the ambiance, service, menu offerings, and overall experience. From cozy
+          coffee nooks to elegant dining establishments and lively bars, we bring you the highlights
+          and hidden gems of the culinary and beverage world.
+        </p>
+        <p className="mb-4">
+          Join our community to share your own experiences, find recommendations, and explore the
+          finest places to enjoy your favorite food and drinks. We Review is here to guide you on
+          your gastronomic adventures, one review at a time.
+        </p>
+      </div>
+{/* Swiper Carousel */}
+<div className="swiper-container">
         <Swiper
           spaceBetween={50}
           slidesPerView={1}
@@ -60,29 +83,6 @@ const Home: React.FC = () => {
           </SwiperSlide>
         </Swiper>
       </div>
-
-      {/* Description */}
-      <div className="max-w-4xl mx-auto p-8">
-        <h2 className="text-2xl font-bold mb-4">Welcome to We Review!</h2>
-        <p className="mb-4">
-          Discover the best spots in town with We Review, your ultimate destination for honest and
-          comprehensive reviews on coffee shops, restaurants, and bars. Whether you're a coffee
-          connoisseur, a foodie looking for the next great dining experience, or someone searching
-          for the perfect night out, We Review has got you covered.
-        </p>
-        <p className="mb-4">
-          Our team of expert reviewers visits and evaluates each venue, ensuring you get detailed
-          insights into the ambiance, service, menu offerings, and overall experience. From cozy
-          coffee nooks to elegant dining establishments and lively bars, we bring you the highlights
-          and hidden gems of the culinary and beverage world.
-        </p>
-        <p className="mb-4">
-          Join our community to share your own experiences, find recommendations, and explore the
-          finest places to enjoy your favorite food and drinks. We Review is here to guide you on
-          your gastronomic adventures, one review at a time.
-        </p>
-      </div>
-
       {/* Product Cards */}
       <div className="flex justify-around mt-8">
         {/* Coffee Card */}
