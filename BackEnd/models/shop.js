@@ -1,4 +1,4 @@
-const conn = require('../Database/index');
+const conn = require('../Database/db');
 
 module.exports = {
   getAll(callback) {
