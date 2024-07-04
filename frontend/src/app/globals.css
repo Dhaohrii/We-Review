@@ -1,0 +1,34 @@
+/* Import Swiper styles */
+@import 'swiper/swiper-bundle.css';
+
+/* Tailwind CSS base, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global styles */
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+footer {
+  background-color: #f8f9fa; /* Light gray background */
+  color: #6c757d; /* Text color */
+  width: 100%;
+  text-align: center;
+  z-index: 1000;
+  position: relative;
+}

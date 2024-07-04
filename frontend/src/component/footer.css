@@ -1,0 +1,44 @@
+.footer {
+    background-color: #f8f9fa; /* Light gray background */
+    color: #6c757d; /* Text color */
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+}
+
+.footer-links {
+    display: flex; /* Use Flexbox */
+    justify-content: center; /* Center items horizontally */
+    align-items: center; /* Optional: Align items vertically centered */
+    gap: 20px; /* Adjust as needed */
+}
+
+.footer-links .text-reset {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s;
+}
+
+.footer-links .text-reset:hover {
+    color: #007bff; /* Blue color on hover */
+}
+
+.footer-text {
+    text-align: center;
+    margin-top: 10px;
+    font-size: 12px;
+    color: #6c757d;
+}
+
+.footer-text p {
+    margin-bottom: 0;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around; /* Spread items horizontally */
+    align-items: flex-start; /* Align items at the start vertically */
+    flex-wrap: wrap; /* Wrap items if they overflow */
+    gap: 20px; /* Optional: Add spacing between columns */
+}
