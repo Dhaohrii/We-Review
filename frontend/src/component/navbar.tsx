@@ -40,6 +40,9 @@ const Navbar: React.FC = () => {
                     <Link href="/aboutus" passHref>
                         <p className="navbar-item">About Us</p>
                     </Link>
+                    <Link href="/contact" passHref>
+                        <p className="navbar-item">Contact Us </p>
+                    </Link>
                 </div>
                 {/* Navbar search */}
                 <div className="navbar-search">
