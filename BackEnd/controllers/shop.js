@@ -1,9 +1,8 @@
-import { Request, Response } from 'express';
-import shop from '../models/shop';
+const shop = require('../models/shop');
 
 module.exports = {
-  getAllShop: function (req: Request, res: Response): void {
-    shop.getAll((err: Error, results: any) => {
+  getAllShop: function(req, res) {
+    shop.getAll(function(err, results) {
       if (err) {
         console.error('Error fetching all shop:', err.message);
         res.status(500).json({ error: 'Failed to fetch all shop' });
@@ -13,93 +12,93 @@ module.exports = {
     });
   },
 
-  getShopById: function (req: Request, res: Response): void {
-    const shopId = parseInt(req.params.id, 10);
+  getShopById: function(req, res) {
+    const shopId = req.params.id;
 
-    shop.getById(shopId, (err: Error, results: any) => {
+    shop.getByIdshopId, function(err, results) {
       if (err) {
         console.error(`Error fetching shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to fetch shop with ID ${shopId}` });
         return;
       }
       res.status(200).json(results);
-    });
+    };
   },
 
-  addShop: function (req: Request, res: Response): void {
+addshop: function(req, res) {
     const { shopOwner_id, name, category, description, address, video, menu, logo, like, dislike } = req.body;
-    const newShop = {
-      shopOwner_id,
-      name,
-      category,
-      description,
-      address,
-      video,
-      menu,
-      logo,
-      like,
-      dislike
+    const shop = {
+        shopOwner_id,
+        name,
+        category,
+        description,
+        address,
+        video,
+        menu,
+        logo,
+        like,
+        dislike
     };
 
-    shop.add(newShop, (err: Error, results: any) => {
+    shop.add(shop, function(err, results) {
       if (err) {
         console.error('Error adding shop:', err.message);
         res.status(500).json({ error: 'Failed to add shop' });
         return;
       }
-      res.status(200).json({ message: 'Shop added successfully', results });
+      res.status(200).json({ message: 'shop added successfully', results });
     });
   },
 
-  updateShop: function (req: Request, res: Response): void {
-    const shopId = parseInt(req.params.id, 10);
+  updateshop: function(req, res) {
+    const shopId = req.params.id;
     const { name, category, description, address, video, menu, logo, like, dislike } = req.body;
-
+  
     if (!menu) {
-      console.error('Menu is missing or null.');
-      res.status(400).json({ error: 'Menu is required.' });
+      console.error('Images is missing or null.');
+      res.status(400).json({ error: 'Image is required.' });
       return;
     }
-
-    const updatedShop = {
-      name,
-      category,
-      description,
-      address,
-      video,
-      menu,
-      logo,
-      like,
-      dislike
+  
+    const shop = {
+        name,
+        category,
+        description,
+        address,
+        video,
+        menu,
+        logo,
+        like,
+        dislike
     };
-
-    shop.update(shopId, updatedShop, (err: Error, results: any) => {
+  
+    shop.update(shopId, shop, function(err, results) {
       if (err) {
         console.error(`Error updating shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to update shop with ID ${shopId}` });
         return;
       }
-      res.status(200).json({ message: `Shop with ID ${shopId} updated successfully`, results });
+      res.status(200).json({ message: `shop with ID ${shopId} updated successfully`, results });
     });
   },
 
-  deleteShop: function (req: Request, res: Response): void {
-    const shopId = parseInt(req.params.id, 10);
+  deleteshop: function(req, res) {
+    const shopId = req.params.id;
 
-    shop.delete(shopId, (err: Error, results: any) => {
+    shop.delete(shopId, function(err, results) {
       if (err) {
         console.error(`Error deleting shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to delete shop with ID ${shopId}` });
         return;
       }
-      res.status(200).json({ message: `Shop with ID ${shopId} deleted successfully`, results });
+      res.status(200).json({ message: `shop with ID ${shopId} deleted successfully`, results });
     });
   },
 
-  getByCategory: function (req: Request, res: Response): void {
+  getByCategory: function(req, res) {
     const categoryName = req.params.category;
 
-    shop.getByCategory(categoryName, (err: Error, results: any) => {
+    shop.getByCategory(categoryName, function(err, results) {
       if (err) {
         console.error(`Error fetching shop by category ${categoryName}:`, err.message);
         res.status(500).json({ error: `Failed to fetch shop by category ${categoryName}` });
@@ -108,4 +107,5 @@ module.exports = {
       res.status(200).json(results);
     });
   },
+
 };
