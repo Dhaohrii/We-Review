@@ -1,8 +1,8 @@
-/* Navbar styles */
+/* styles/navbar.css */
 .navbar {
     background-color: #333;
     color: #fff;
-    padding: 10px 0;
+    padding: 10px 20px;
 }
 
 .navbar-container {
@@ -11,7 +11,6 @@
     justify-content: space-between;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
 }
 
 .navbar-logo {
@@ -24,12 +23,13 @@
 
 .navbar-items {
     display: flex;
+    gap: 20px;
     align-items: center;
 }
 
-.navbar-item {
+.navbar-item,
+.navbar-dropdown-item {
     font-size: 1rem;
-    margin-left: 20px;
     text-decoration: none;
     color: #fff;
     cursor: pointer;
@@ -37,7 +37,6 @@
 
 .navbar-dropdown {
     position: relative;
-    margin-left: 20px;
 }
 
 .navbar-dropdown-btn {
@@ -67,7 +66,9 @@
 }
 
 .navbar-search {
-    margin-left: auto;
+    display: flex;
+    gap: 10px;
+    align-items: center;
 }
 
 .navbar-search input[type="text"] {
@@ -75,6 +76,8 @@
     border: none;
     border-radius: 4px;
     margin-right: 5px;
+    background-color: #f1f1f1;
+    color: #333;
 }
 
 .navbar-search button[type="submit"] {
@@ -84,4 +87,21 @@
     border: none;
     cursor: pointer;
     border-radius: 4px;
+}
+
+.navbar-auth {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.navbar-auth-item {
+    font-size: 1rem;
+    text-decoration: none;
+    color: #fff;
+    cursor: pointer;
+}
+
+.navbar-auth-item:hover {
+    text-decoration: underline;
 }

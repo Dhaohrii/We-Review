@@ -11,6 +11,9 @@ const shopRoute=require('./routes/shop')
 app.use(cors())
 
 app.use(express.json())
+app.use(express.urlencoded({extended : true}))
+app.use(express.static(__dirname + '/../client/dist'))
+
 app.use(bodyParser.json())
 app.use('/api/user',userRoute);
 app.use('/api/shop',shopRoute)
