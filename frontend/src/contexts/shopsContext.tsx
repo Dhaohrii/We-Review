@@ -5,6 +5,7 @@ import axios from 'axios';
 
 // Define a type for Shop
 export interface Shop {
+  video: string | undefined;
   id: number;
   name: string;
   category: 'coffee' | 'restaurant' | 'bar';
