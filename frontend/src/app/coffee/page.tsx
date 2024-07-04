@@ -1,8 +1,10 @@
 // src/app/coffee/page.tsx
+
 'use client'; // Ensure client-side rendering
 
 import React from 'react';
-import { useShops } from '../../contexts/shopsContext';
+import { useShops, Shop } from '../../contexts/shopsContext';
+import Link from 'next/link'; // Import Link from Next.js
 
 const CoffeePage: React.FC = () => {
   const { shops } = useShops();
@@ -12,15 +14,15 @@ const CoffeePage: React.FC = () => {
     <div>
       <h2>Coffee Shops</h2>
       <ul>
-        {coffeeShops.map(shop => (
+        {coffeeShops.map((shop: Shop) => (
           <li key={shop.id}>
             <img src={shop.image} alt={shop.name} />
             <div>
               <h3>{shop.name}</h3>
               <p>{shop.address}</p>
-              <button onClick={() => console.log(`Details for ${shop.name}`)}>
-                View Details
-              </button>
+              <Link href={`/coffee/${shop.id}`}>
+                <a>View Details</a>
+              </Link>
             </div>
           </li>
         ))}

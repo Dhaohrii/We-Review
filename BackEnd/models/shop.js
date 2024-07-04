@@ -13,11 +13,12 @@ module.exports = {
     });
   },
 
-  add(shop, callback) {
-    const { shopOwner_id, name, category, description, address, video, menu, logo, like, dislike} = shop;
-    const query = 'INSERT INTO shop (shopOwner_id, name, category, description, address, video, menu, logo, like, dislike) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const params = [shopOwner_id,name, category, description, address, video, JSON.stringify(menu), logo, like, dislike];
-    
+  add: function(shopData, callback) {
+    const { shopOwner_id, name, category, description, address, video, menu, logo, like, dislike } = shopData;
+
+    const query = 'INSERT INTO shop (shopOwner_id, name, category, description, address, video, menu, logo, `like`, `dislike`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
+    const params = [shopOwner_id, name, category, description, address, video, JSON.stringify(menu), logo, like, dislike];
+
     conn.query(query, params, (err, results) => {
       if (err) {
         console.error('Error adding shop to database:', err.message);

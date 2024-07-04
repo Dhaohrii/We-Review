@@ -25,30 +25,41 @@ module.exports = {
     };
   },
 
-addshop: function(req, res) {
+
+  addshop: function(req, res) {
     const { shopOwner_id, name, category, description, address, video, menu, logo, like, dislike } = req.body;
-    const shop = {
-        shopOwner_id,
-        name,
-        category,
-        description,
-        address,
-        video,
-        menu,
-        logo,
-        like,
-        dislike
+
+    // Validate required fields
+    if (!name || !category || !description || !address || !video || !menu || !logo || like === undefined || dislike === undefined) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const newShop = {
+      shopOwner_id,
+      name,
+      category,
+      description,
+      address,
+      video,
+      menu,
+      logo,
+      like,
+      dislike
     };
 
-    shop.add(shop, function(err, results) {
+    Shop.add(newShop, function(err, savedShop) {
       if (err) {
         console.error('Error adding shop:', err.message);
-        res.status(500).json({ error: 'Failed to add shop' });
-        return;
+        return res.status(500).json({ error: 'Failed to add shop' });
       }
-      res.status(200).json({ message: 'shop added successfully', results });
+      res.status(200).json({ message: 'Shop added successfully', shop: savedShop });
     });
   },
+
+
+
+
+
 
   updateshop: function(req, res) {
     const shopId = req.params.id;
