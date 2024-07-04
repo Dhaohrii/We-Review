@@ -1,27 +1,99 @@
+// pages/contact.tsx
 'use client';
-import React from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput } from 'mdbreact';
-import "./contact.module.css"
+import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
+import styles from './contact.module.css'; // Adjust path as per your project
+
 const ContactPage: React.FC = () => {
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const [description, setDescription] = useState('');
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    // Your EmailJS service details
+    const serviceID = 'service_592y71a';
+    const templateID = 'template_chpx86t';
+    const userID = 'dtawJTjENY7Gw6Edd';
+
+    // Prepare template parameters
+    const templateParams = {
+      from_name: `${firstName} ${lastName}`,
+      from_email: email,
+      to_name: "Banzour", // Replace with the recipient's name or email
+      message: description
+    };
+
+    // Send email using EmailJS
+    emailjs.send(serviceID, templateID, templateParams, userID)
+      .then((result) => {
+        console.log('Email sent successfully:', result.text);
+            // Clear form fields after submission
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setDescription('');
+        // Optionally handle success feedback to the user
+      }, (error) => {
+        console.error('Failed to send email:', error);
+        // Optionally handle error feedback to the user
+      });
+
+
+  };
+
   return (
-    <MDBContainer>
-      <MDBRow>
-        <MDBCol md="6" className="mx-auto">
-          <form>
-            <p className="h4 text-center mb-4">Contact Us</p>
-            <div className="grey-text">
-              <MDBInput label="Your name" icon="user" group type="text" validate error="wrong" success="right" />
-              <MDBInput label="Your email" icon="envelope" group type="email" validate error="wrong" success="right" />
-              <MDBInput label="Subject" icon="tag" group type="text" validate error="wrong" success="right" />
-              <MDBInput type="textarea" rows="2" label="Your message" icon="pencil-alt" />
-            </div>
-            <div className="text-center">
-              <MDBBtn color="primary">Send</MDBBtn>
-            </div>
-          </form>
-        </MDBCol>
-      </MDBRow>
-    </MDBContainer>
+    <div className={styles.formContainer}>
+      <h2>Contact Us</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          First Name:
+          <input
+            type="text"
+            name="first_name"
+            value={firstName}
+            onChange={(e) => setFirstName(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Last Name:
+          <input
+            type="text"
+            name="last_name"
+            value={lastName}
+            onChange={(e) => setLastName(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <label>
+          Description:
+          <textarea
+            name="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </label>
+        <br />
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 };
 
