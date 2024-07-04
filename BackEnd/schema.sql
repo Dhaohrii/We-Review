@@ -19,7 +19,7 @@ CREATE TABLE User (
 -- Create Shop table
 CREATE TABLE Shop (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    shopOwner_id INT,
+    shopOwner_id INT ,
     name VARCHAR(100) NOT NULL,
     category ENUM('coffee', 'restaurant', 'bar') NOT NULL,
     description TEXT,
