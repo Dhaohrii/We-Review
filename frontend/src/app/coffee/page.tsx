@@ -1,32 +1,30 @@
-// src/app/coffee/page.tsx
-
-'use client'; // Ensure client-side rendering
+'use client';
 
 import React from 'react';
 import { useShops, Shop } from '../../contexts/shopsContext';
-import Link from 'next/link'; // Import Link from Next.js
+import Link from 'next/link';
+import styles from './coffee.module.css';
 
 const CoffeePage: React.FC = () => {
   const { shops } = useShops();
-  const coffeeShops = shops.filter(shop => shop.category === 'coffee');
+  const coffeeShops = shops.filter((shop: Shop) => shop.category === 'coffee');
 
   return (
-    <div>
-      <h2>Coffee Shops</h2>
-      <ul>
+    <div className={styles.coffeeContainer}>
+      <div className={styles.coffeeList}>
         {coffeeShops.map((shop: Shop) => (
-          <li key={shop.id}>
-            <img src={shop.image} alt={shop.name} />
-            <div>
+          <div key={shop.id} className={styles.coffeeCard}>
+            <img className={styles.coffeeImage} src={shop.logo} alt={shop.name} />
+            <div className={styles.coffeeDetails}>
               <h3>{shop.name}</h3>
               <p>{shop.address}</p>
               <Link href={`/coffee/${shop.id}`}>
-                <a>View Details</a>
+                <span className={styles.detailsButton}>View Details</span>
               </Link>
             </div>
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };
