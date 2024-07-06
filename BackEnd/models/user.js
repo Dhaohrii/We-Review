@@ -2,6 +2,7 @@ const db=require("../Database/db");
 const bcrypt =require("bcrypt");
 const { error } = require("console");
 const {z}=require("zod");
+const { password } = require("../Database/config");
 
 module.exports={
 userValidation:z.object({
@@ -11,7 +12,20 @@ userValidation:z.object({
     phonenumber:z.string().min(8,"Please enter a valid Number").optional(),
     role: z.enum(['user', 'shopOwner', 'admin']),
     photo: z.string().optional(),
-}),   
+}),
+login:z.object({
+email:z.string().email("invalid Email"),
+password:z.string().min(8,"Password must be at least 8 characters")
+}),
+getUserByEmail:function(email,callback){
+const sql="SELECT * FROM `user` WHERE email=?";
+db.query(sql,email,(err,results)=>{
+    if(err){
+        return callback(err,null)
+    }
+    return callback(null,results)
+})
+},   
 addUser: function(user,callback){
     const sql="INSERT INTO `user` SET ?";
     db.query(sql,user,(err,results)=>{
