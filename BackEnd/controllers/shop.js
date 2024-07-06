@@ -15,40 +15,49 @@ module.exports = {
   getShopById: function(req, res) {
     const shopId = req.params.id;
 
-    shop.getByIdshopId, function(err, results) {
+    shop.getById(shopId, function(err, results) {
       if (err) {
         console.error(`Error fetching shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to fetch shop with ID ${shopId}` });
         return;
       }
       res.status(200).json(results);
-    };
-  },
-
-addshop: function(req, res) {
-    const { shopOwner_id, name, category, description, address, video, menu, logo, like, dislike } = req.body;
-    const shop = {
-        shopOwner_id,
-        name,
-        category,
-        description,
-        address,
-        video,
-        menu,
-        logo,
-        like,
-        dislike
-    };
-
-    shop.add(shop, function(err, results) {
-      if (err) {
-        console.error('Error adding shop:', err.message);
-        res.status(500).json({ error: 'Failed to add shop' });
-        return;
-      }
-      res.status(200).json({ message: 'shop added successfully', results });
     });
   },
+
+
+  addshop: function(req, res) {
+    const { shopOwner_id, name, category, description, address, video, menu, logo } = req.body;
+
+    // Validate required fields
+    if (!shopOwner_id ||!name || !category || !description || !address || !video || !menu || !logo ) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+
+    const newShop = {
+      shopOwner_id,
+      name,
+      category,
+      description,
+      address,
+      video,
+      menu,
+      logo
+    };
+
+    shop.add(newShop, function(err, savedShop) {
+      if (err) {
+        console.error('Error adding shop:', err.message);
+        return res.status(500).json({ error: 'Failed to add shop' });
+      }
+      res.status(200).json({ message: 'Shop added successfully', shop: savedShop });
+    });
+  },
+
+
+
+
+
 
   updateshop: function(req, res) {
     const shopId = req.params.id;
@@ -60,7 +69,7 @@ addshop: function(req, res) {
       return;
     }
   
-    const shop = {
+    const shops = {
         name,
         category,
         description,
@@ -72,7 +81,7 @@ addshop: function(req, res) {
         dislike
     };
   
-    shop.update(shopId, shop, function(err, results) {
+    shop.update(shopId, shops, function(err, results) {
       if (err) {
         console.error(`Error updating shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to update shop with ID ${shopId}` });

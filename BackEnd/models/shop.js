@@ -13,11 +13,12 @@ module.exports = {
     });
   },
 
-  add(shop, callback) {
-    const { shopOwner_id, name, category, description, address, video, menu, logo, like, dislike} = shop;
-    const query = 'INSERT INTO shop (shopOwner_id, name, category, description, address, video, menu, logo, like, dislike) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)';
-    const params = [shopOwner_id,name, category, description, address, video, JSON.stringify(menu), logo, like, dislike];
-    
+  add(shopData, callback) {
+    const { shopOwner_id, name, category, description, address, video, menu, logo } = shopData;
+
+    const query = 'INSERT INTO shop (shopOwner_id, name, category, description, address, video, menu, logo) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
+    const params = [shopOwner_id, name, category, description, address, video, JSON.stringify(menu), logo];
+
     conn.query(query, params, (err, results) => {
       if (err) {
         console.error('Error adding shop to database:', err.message);
@@ -44,10 +45,10 @@ module.exports = {
 
   update(id, shop, callback) {
     const { name, category, description, address, video, menu, logo, like, dislike } = shop;
-    const query = 'UPDATE shop SET name = ?, category = ?, description = ?, address = ?, video = ?, menu = ?, logo = ?, like = ?, dislike= ? WHERE id = ?';
+    const query = 'UPDATE shop SET name = ?, category = ?, description = ?, address = ?, video = ?, menu = ?, logo = ?, \`like\` = ?, dislike= ? WHERE id = ?';
     const params = [name, category, description, address, video, JSON.stringify(menu), logo, like, dislike,id];
   
-    conn.query(query, params, (err, results) => {
+    conn.query(query, params, (err, results, fields) => {
       if (err) {
         console.error(`Error updating shop with ID ${id}:`, err.message);
         callback(err, null);

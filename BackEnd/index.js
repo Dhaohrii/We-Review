@@ -7,15 +7,18 @@ const bodyParser=require("body-parser")
 const userRoute=require("./routes/user")
 const shopRoute=require('./routes/shop');
 const cookieParser = require("cookie-parser");
+const CommentRoute=require('./routes/comments')
 
+app.use(cors());
 
-app.use(cors())
-
-app.use(express.json())
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+app.use(express.json({limit:'500mb'}));
+app.use(express.urlencoded({extended:true, limit:'500mb'}));
 app.use(cookieParser())
-app.use('/api/user',userRoute);
-app.use('/api/shop',shopRoute)
+app.use(express.static(__dirname + '/../client/dist'));
+app.use("/api/shop",shopRoute);
+app.use("/api/user",userRoute);
+app.use("/api/comment",CommentRoute);
 
 
 app.listen(port, () => {
