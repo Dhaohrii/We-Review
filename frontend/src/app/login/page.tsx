@@ -3,30 +3,33 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Import Axios
 import styles from './login.module.css'; // Importing CSS module
+import { useRouter } from 'next/navigation';
+
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
-  const [isLoggedIn, setIsLoggedIn] = useState(false); // State to track login status
-
+  const router=useRouter();
+  axios.defaults.withCredentials=true;
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
     try {
-      // Example endpoint for login (replace with your actual API endpoint)
-      const response = await axios.post('https://api.example.com/login', {
+      const response = await axios.post('http://localhost:5000/api/user/login', {
         email,
         password
       });
+      if (response.status === 200) {
+        router.push("/");
+        setTimeout(() => {
+          window.location.reload();
+        }, 10);
+      }
 
-      // Handle successful login
-      console.log('Login successful:', response.data);
-      setIsLoggedIn(true); // Set isLoggedIn to true upon successful login
-
-    } catch (error) {
-      // Handle login error
-      setError(error.response?.data?.message || error.message);
+    } catch (error:any) {
+      console.log(error)
+      setError(error.response.data.error);
     }
   };
 

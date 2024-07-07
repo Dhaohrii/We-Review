@@ -3,7 +3,7 @@ const route=express.Router();
 const multer = require('multer');
 const cloudinary = require('../cloudinary/cloudinary');
 const { createUser, checkLogin } = require('../controllers/user');
-// const userCheck=require("../controllers/LogonChecker")
+const userCheck=require("../controllers/LogonChecker")
 
 // Configure Multer to store files in memory
 const storage = multer.memoryStorage();

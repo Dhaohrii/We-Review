@@ -26,7 +26,7 @@ CREATE TABLE Shop (
     address VARCHAR(255),
     video VARCHAR(255),
     menu JSON, -- Assuming menu is an array of images or URLs
-    logo VARCHAR(500),
+    logo VARCHAR(2000),
     `like` INT DEFAULT 0,
     `dislike` INT DEFAULT 0,
     FOREIGN KEY (shopOwner_id) REFERENCES `User`(`id`)
