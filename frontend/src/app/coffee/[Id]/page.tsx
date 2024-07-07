@@ -47,7 +47,8 @@ const CoffeeDetailPage: React.FC<CoffeeDetailPageProps> = ({ params }) => {
   useEffect(() => {
     const fetchCoffeeShop = async () => {
       try {
-        const response = await axios.get<Shop>(`http://localhost:5000/api/shop/get/${coffeeId}`);
+        const response = await axios.get(`http://localhost:5000/api/shop/get/${coffeeId}`);
+        
         setCoffeeShop(response.data);
       } catch (error) {
         console.error('Error fetching coffee shop details:', error);

@@ -1,6 +1,7 @@
 const model=require("../models/user");
 const bcrypt=require("bcrypt");
-const {getToken}=require('./jwtGen.js')
+const {getToken}=require('./jwtGen.js');
+
 
     async function createUser(req,res){
         
