@@ -1,46 +1,14 @@
-// src/pages/coffee/[coffeeId].tsx
-
-
-
-// const CoffeeDetailPage: React.FC<CoffeeDetailProps> = ({ coffeeId, initialCoffeeShop }) => {
-
-
-
-
-
-// export const getServerSideProps = async (context: any) => {
-//   const { coffeeId } = context.query;
-  
-//   try {
-//     const response = await axios.get(`http://localhost:5000/api/shop/get/${coffeeId}`);
-//     const initialCoffeeShop = response.data;
-
-//     return {
-//       props: {
-//         coffeeId,
-//         initialCoffeeShop,
-//       },
-//     };
-//   } catch (error) {
-//     console.error('Error fetching initial data:', error);
-//     return {
-//       notFound: true,
-//     };
-//   }
-// };
-
-// // export default CoffeeDetailPage;'use client'; // Ensure client-side rendering
 "use client"
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Shop } from '../../../contexts/shopsContext';
+import { useParams } from 'next/navigation';
 
-interface CoffeeDetailPageProps {
-  params: { coffeeId: string };
-}
 
-const CoffeeDetailPage: React.FC<CoffeeDetailPageProps> = ({ params }) => {
-  const coffeeId = params.coffeeId;
+
+const CoffeeDetailPage: React.FC = () => {
+  const params=useParams();
+  const coffeeId=params.Id
   const [coffeeShop, setCoffeeShop] = useState<Shop | null>(null);
   const [hasFetched, setHasFetched] = useState<boolean>(false);
 
@@ -48,8 +16,7 @@ const CoffeeDetailPage: React.FC<CoffeeDetailPageProps> = ({ params }) => {
     const fetchCoffeeShop = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/shop/get/${coffeeId}`);
-        
-        setCoffeeShop(response.data);
+      setCoffeeShop(response.data[0]);
       } catch (error) {
         console.error('Error fetching coffee shop details:', error);
       }
