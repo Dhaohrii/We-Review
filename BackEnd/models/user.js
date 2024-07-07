@@ -26,14 +26,20 @@ db.query(sql,email,(err,results)=>{
     return callback(null,results)
 })
 },   
-addUser: function(user,callback){
-    const sql="INSERT INTO `user` SET ?";
-    db.query(sql,user,(err,results)=>{
-        if(err){
-            return callback(err,null)
-        }
-        return callback(null,results)
-    });
-}
+// Method to add a new user to the database
+add(userData, callback) {
+    const { fullname, email, password, phonenumber, role, photo } = userData;
+    const query = 'INSERT INTO users (fullname, email, password, phonenumber, role, photo) VALUES (?, ?, ?, ?, ?, ?)';
+    const params = [fullname, email, password, phonenumber, role, photo];
 
+    conn.query(query, params, (err, results) => {
+      if (err) {
+        console.error('Error adding user to database:', err.message);
+        callback(err, null);
+        return;
+      }
+      console.log('User added to database successfully:', results);
+      callback(null, results);
+    });
+  }
 }
