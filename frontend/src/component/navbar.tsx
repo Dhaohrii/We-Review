@@ -1,13 +1,34 @@
-// components/Navbar.tsx
+"use client"
 import Link from 'next/link';
 import React from 'react';
-import "./navbar.css"
+import "./navbar.css";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-interface NavbarProps {
-  isLoggedIn?: boolean; // Make isLoggedIn optional
-}
+const Navbar: React.FC = () => {
+  const [user, setUser] = useState<any>(null); // Adjusted to any for flexibility
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/user/isloged', { withCredentials: true });
+        setUser(response.data.user);
+      } catch (error) {
+        console.error('Error checking login status:', error);
+        setUser(null); // Handle error or set user to null
+      }
+    };
 
-const Navbar: React.FC<NavbarProps> = ({ isLoggedIn = false }) => {
+    checkLoginStatus();
+  }, []);
+  const logoutHandler=async function logout() {
+    try {
+      const response=await axios.get("http://localhost:5000/api/user/logout")
+      alert(response.data.message);
+      window.location.reload()
+    } catch (error) {
+      console.error('Something Wrong',error);
+    }
+  }
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -55,7 +76,7 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn = false }) => {
           <button type="submit">Search</button>
         </div>
         {/* Conditional rendering for auth links */}
-        {!isLoggedIn ? (
+        {!user? (
           <div className="navbar-auth">
             <Link href="/login" passHref>
               <p className="navbar-auth-item">Login</p>
@@ -69,8 +90,8 @@ const Navbar: React.FC<NavbarProps> = ({ isLoggedIn = false }) => {
             <Link href="/profile" passHref>
               <p className="navbar-auth-item">Profile</p>
             </Link>
-            <Link href="/logout" passHref>
-              <p className="navbar-auth-item">Logout</p>
+            <Link href="/" passHref>
+              <p className="navbar-auth-item" onClick={logoutHandler} >Logout</p>
             </Link>
           </div>
         )}

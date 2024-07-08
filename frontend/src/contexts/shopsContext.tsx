@@ -5,6 +5,7 @@ import axios from 'axios';
 
 // Define a type for Shop
 export interface Shop {
+  dislike: ReactNode;
   logo: string | undefined;
   video: string | undefined;
   id: number;
