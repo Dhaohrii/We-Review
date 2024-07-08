@@ -147,3 +147,77 @@
     margin-top: 5px;
   }
   
+
+  /* Existing styles */
+
+.comments-section {
+    margin: 20px 0;
+    text-align: left;
+  }
+  
+  .comments-section h3 {
+    font-size: 1.8em;
+    color: #2c3e50;
+    margin-bottom: 10px;
+  }
+  
+  .comment {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    background-color: #ecf0f1; /* Light grey background for comments */
+    padding: 10px;
+    border-radius: 8px;
+  }
+  
+  .comment img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .comment-details {
+    max-width: 90%;
+  }
+  
+  .comment-details p {
+    margin: 0;
+    color: #2c3e50;
+  }
+  
+  .comment-user {
+    font-weight: bold;
+    color: #34495e; /* Dark grey for user name */
+    margin-bottom: 5px;
+  }
+  
+  /* Add margin to the comment input field */
+  .comments-section form {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+  }
+  
+  .comments-section input {
+    flex-grow: 1;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+  }
+  
+  .comments-section button {
+    padding: 10px 20px;
+    background-color: #3498db; /* Blue color for the button */
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .comments-section button:hover {
+    background-color: #2980b9; /* Darker blue for hover effect */
+  }
+  

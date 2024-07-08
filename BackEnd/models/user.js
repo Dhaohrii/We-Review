@@ -41,5 +41,17 @@ addUser(userData, callback) {
       console.log('User added to database successfully:', results);
       callback(null, results);
     });
+  },
+  getById(id, callback) {
+    const query = 'SELECT * FROM user WHERE id = ?';
+    db.query(query, [id], (err, results) => {
+      if (err) {
+        console.error(`Error fetching user by ID ${id}:`, err.message);
+        callback(err, null);
+        return;
+      }
+      console.log(`user fetched by ID ${id} successfully:`, results);
+      callback(null, results);
+    });
   }
 }
