@@ -1,6 +1,6 @@
 // contexts/ShopsContext.tsx
 'use client'; // Mark as client-side component
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react'; // Import ReactNode
 import axios from 'axios';
 
 // Define a type for Shop
@@ -12,8 +12,8 @@ export interface Shop {
   category: 'coffee' | 'restaurant' | 'bar';
   address: string;
   image: string;
-  description: ReactNode;
-  menu: (menu: any) => React.ReactNode;
+  description: ReactNode; // Use ReactNode for description
+  menu: (menu: any) => React.ReactNode; // Adjust menu type and function definition
 }
 
 // Define a type for ShopsContext
@@ -40,12 +40,12 @@ interface ShopsProviderProps {
 }
 
 export const ShopsProvider: React.FC<ShopsProviderProps> = ({ children }) => {
-  const [shops, setShops] = useState<Shop[]>([]);
+  const [shops, setShops] = useState<Shop[]>([]); // Initialize with an empty array
 
   useEffect(() => {
     const fetchShops = async () => {
       try {
-        const response = await axios.get<Shop[]>('http://localhost:5000/api/shop/get');
+        const response = await axios.get<Shop[]>('http://localhost:5000/api/shop/get'); // Adjust endpoint as per your API
         setShops(response.data);
       } catch (error) {
         console.error('Error fetching shops:', error);
@@ -53,7 +53,7 @@ export const ShopsProvider: React.FC<ShopsProviderProps> = ({ children }) => {
     };
 
     fetchShops();
-  }, []);
+  }, []); // Empty dependency array ensures effect runs only once
 
   return (
     <ShopsContext.Provider value={{ shops, setShops }}>

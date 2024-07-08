@@ -15,22 +15,22 @@ module.exports = {
   getShopById: function(req, res) {
     const shopId = req.params.id;
 
-    shop.getByIdshopId, function(err, results) {
+    shop.getById(shopId, function(err, results) {
       if (err) {
         console.error(`Error fetching shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to fetch shop with ID ${shopId}` });
         return;
       }
       res.status(200).json(results);
-    };
+    });
   },
 
 
   addshop: function(req, res) {
-    const { shopOwner_id, name, category, description, address, video, menu, logo, like, dislike } = req.body;
+    const { shopOwner_id, name, category, description, address, video, menu, logo } = req.body;
 
     // Validate required fields
-    if (!name || !category || !description || !address || !video || !menu || !logo || like === undefined || dislike === undefined) {
+    if (!shopOwner_id ||!name || !category || !description || !address || !video || !menu || !logo ) {
       return res.status(400).json({ error: 'All fields are required' });
     }
 
@@ -42,12 +42,10 @@ module.exports = {
       address,
       video,
       menu,
-      logo,
-      like,
-      dislike
+      logo
     };
 
-    Shop.add(newShop, function(err, savedShop) {
+    shop.add(newShop, function(err, savedShop) {
       if (err) {
         console.error('Error adding shop:', err.message);
         return res.status(500).json({ error: 'Failed to add shop' });
@@ -71,7 +69,7 @@ module.exports = {
       return;
     }
   
-    const shop = {
+    const shops = {
         name,
         category,
         description,
@@ -83,7 +81,7 @@ module.exports = {
         dislike
     };
   
-    shop.update(shopId, shop, function(err, results) {
+    shop.update(shopId, shops, function(err, results) {
       if (err) {
         console.error(`Error updating shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to update shop with ID ${shopId}` });
