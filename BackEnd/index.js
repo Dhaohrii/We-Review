@@ -9,7 +9,6 @@ const userRoute=require("./routes/user")
 const shopRoute=require('./routes/shop');
 const cookieParser = require("cookie-parser");
 const CommentRoute=require('./routes/comments');
-const userCheck=require("./controllers/LogonChecker");
 const router = require("./routes/shop");
 const cloudinary=require("./cloudinary/cloudinary")
 

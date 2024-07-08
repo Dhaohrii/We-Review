@@ -65,5 +65,15 @@ const {getToken}=require('./jwtGen.js');
         }
     }
     
+    async function logout(req, res) {
+        try{
+            res.clearCookie("token")
+            res.status(200).json({ message: 'Logout successful' })
+        }
+         catch (error) {
+            console.error("Internal server error:", error);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+    }
 
-module.exports = { createUser, checkLogin };
+module.exports = { createUser, checkLogin , logout};
