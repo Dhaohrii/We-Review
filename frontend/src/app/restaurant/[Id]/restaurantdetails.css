@@ -1,0 +1,36 @@
+.shop-detail {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .shop-logo {
+    width: 100px;
+    height: auto;
+  }
+  
+  .shop-address,
+  .shop-description {
+    margin: 10px 0;
+  }
+  
+  .shop-menu {
+    margin: 20px 0;
+  }
+  
+  .menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .menu-item {
+    margin: 10px;
+    text-align: left;
+  }
+  
+  .menu-image {
+    width: 100px;
+    height
+  }  

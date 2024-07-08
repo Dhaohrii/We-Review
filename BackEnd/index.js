@@ -19,6 +19,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
+
 app.use(bodyParser.json());
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
@@ -26,7 +27,7 @@ app.use(cookieParser())
 app.use(express.static(__dirname + '/../client/dist'));
 app.use("/api/shop",shopRoute);
 app.use("/api/user",userRoute);
-app.use("/api/comment",CommentRoute);
+app.use("/api/comments",CommentRoute);
 
 
 

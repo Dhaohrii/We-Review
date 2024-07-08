@@ -55,10 +55,6 @@ module.exports = {
   },
 
 
-
-
-
-
   updateshop: function(req, res) {
     const shopId = req.params.id;
     const { name, category, description, address, video, menu, logo, like, dislike } = req.body;
@@ -82,6 +78,35 @@ module.exports = {
     };
   
     shop.update(shopId, shops, function(err, results) {
+      if (err) {
+        console.error(`Error updating shop with ID ${shopId}:`, err.message);
+        res.status(500).json({ error: `Failed to update shop with ID ${shopId}` });
+        return;
+      }
+      res.status(200).json({ message: `shop with ID ${shopId} updated successfully`, results });
+    });
+  },
+
+  
+  updateLikes: function(req, res) {
+
+    const shopId = req.params.id;
+    const {like}=req.body;
+    shop.updateLike(shopId, {like}, function(err, results) {
+      if (err) {
+        console.error(`Error updating shop with ID ${shopId}:`, err.message);
+        res.status(500).json({ error: `Failed to update shop with ID ${shopId}` });
+        return;
+      }
+      res.status(200).json({ message: `shop with ID ${shopId} updated successfully`, results });
+    });
+  },
+
+  updateDislikes: function(req, res) {
+
+    const shopId = req.params.id;
+    const {dislike}=req.body;
+    shop.updateDislike(shopId, {dislike}, function(err, results) {
       if (err) {
         console.error(`Error updating shop with ID ${shopId}:`, err.message);
         res.status(500).json({ error: `Failed to update shop with ID ${shopId}` });

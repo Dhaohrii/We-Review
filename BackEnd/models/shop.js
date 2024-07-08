@@ -59,6 +59,38 @@ module.exports = {
     });
   },
 
+  updateLike(id, shop, callback) {
+    const { like} = shop;
+    const query = 'UPDATE shop SET `like` = ? WHERE id = ?';
+    const params = [like,id];
+  
+    conn.query(query, params, (err, results, fields) => {
+      if (err) {
+        console.error(`Error updating shop with ID ${id}:`, err.message);
+        callback(err, null);
+        return;
+      }
+      console.log(`Shop with ID ${id} updated successfully:`, results);
+      callback(null, results);
+    });
+  },
+
+  updateDislike(id, shop, callback) {
+    const { dislike } = shop;
+    const query = 'UPDATE shop SET `dislike` = ? WHERE id = ?';
+    const params = [dislike,id];
+  
+    conn.query(query, params, (err, results, fields) => {
+      if (err) {
+        console.error(`Error updating shop with ID ${id}:`, err.message);
+        callback(err, null);
+        return;
+      }
+      console.log(`Shop with ID ${id} updated successfully:`, results);
+      callback(null, results);
+    });
+  },
+
   delete(id, callback) {
     const query = 'DELETE FROM shop WHERE id = ?';
     conn.query(query, [id], (err, results) => {
