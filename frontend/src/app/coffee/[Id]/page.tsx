@@ -1,14 +1,12 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Shop } from '../../../contexts/shopsContext';
 import { useParams } from 'next/navigation';
 
-
-
 const CoffeeDetailPage: React.FC = () => {
-  const params=useParams();
-  const coffeeId=params.Id
+  const params = useParams();
+  const coffeeId = params.Id;
   const [coffeeShop, setCoffeeShop] = useState<Shop | null>(null);
   const [hasFetched, setHasFetched] = useState<boolean>(false);
 
@@ -16,7 +14,7 @@ const CoffeeDetailPage: React.FC = () => {
     const fetchCoffeeShop = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/shop/get/${coffeeId}`);
-      setCoffeeShop(response.data[0]);
+        setCoffeeShop(response.data[0]);
       } catch (error) {
         console.error('Error fetching coffee shop details:', error);
       }
@@ -33,13 +31,23 @@ const CoffeeDetailPage: React.FC = () => {
   }
 
   return (
-    <div>
+    <div className="shop-detail">
       <h2>{coffeeShop.name}</h2>
-      <img src={coffeeShop.logo} alt={coffeeShop.name} />
-      <p>{coffeeShop.address}</p>
-      <p>{coffeeShop.description}</p>
-      <img src= {coffeeShop.menu[4]} />
-
+      <img src={coffeeShop.logo} alt={coffeeShop.name} className="shop-logo" />
+      <p className="shop-address">{coffeeShop.address}</p>
+      <p className="shop-description">{coffeeShop.description}</p>
+      <div className="shop-menu">
+        <h3>Menu</h3>
+        <div className="menu-items">
+          {coffeeShop.menu.map((item, index) => (
+            <div key={index} className="menu-item">
+              <img src={item} alt={`Menu item ${index + 1}`} className="menu-image" />
+              <p>{item.name}</p>
+              <p>{item.price}</p>
+            </div>
+          ))}
+        </div>
+      </div>
       <iframe
         width="560"
         height="315"

@@ -31,7 +31,7 @@ module.exports = {
   },
 
   getById(id, callback) {
-    const query = 'SELECT * FROM comments WHERE id = ?';
+    const query = 'SELECT * FROM comments WHERE id_shop = ?';
     conn.query(query, [id], (err, results) => {
       if (err) {
         console.error(`Error fetching comments by ID ${id}:`, err.message);
