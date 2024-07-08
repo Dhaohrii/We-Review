@@ -45,7 +45,7 @@ const {getToken}=require('./jwtGen.js');
                     if (user.password) {
                         const isValidPassword = await bcrypt.compare(password, user.password);
                         if (isValidPassword) {
-                            const token = getToken(user.id, user.email, user.fullname);
+                            const token = getToken(user.id, user.email, user.fullname, user.role);
                             res.cookie('token',token,{httpOnly:true,maxAge:1000*60*60})
                             res.status(200).json({ message: 'Login successful' });
                         } else {

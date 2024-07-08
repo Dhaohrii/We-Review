@@ -6,6 +6,7 @@ function authenticateToken(req, res, next) {
 
     if (!token) {
         req.user = null
+        next();
         return res.status(200)
     }
 
