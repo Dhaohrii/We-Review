@@ -38,7 +38,7 @@ const CoffeeDetailPage: React.FC = () => {
       <img src={coffeeShop.logo} alt={coffeeShop.name} />
       <p>{coffeeShop.address}</p>
       <p>{coffeeShop.description}</p>
-      <p>Menu: {JSON.stringify(coffeeShop.menu)}</p>
+      <img src= {coffeeShop.menu[4]} />
 
       <iframe
         width="560"
