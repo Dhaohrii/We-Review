@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const cors = require('cors')
 const app = express();
@@ -9,6 +10,7 @@ const shopRoute=require('./routes/shop');
 const cookieParser = require("cookie-parser");
 const CommentRoute=require('./routes/comments');
 const router = require("./routes/shop");
+const cloudinary=require("./cloudinary/cloudinary")
 
 const corsOptions = {
   origin: 'http://localhost:3000', // Replace with your frontend URL

@@ -50,8 +50,8 @@ export default function Register() {
         photo: photo ? photo.name : '', // Adjust according to your schema
       });
 
-      // Upload the image to the server and get the Cloudinary URL
-      const uploadResponse = await axios.post("http://localhost:5000/api/upload", formData, {
+       // Upload the image to the server and get the Cloudinary URL
+       const uploadResponse = await axios.post("http://localhost:5000/api/user/upload", formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         }
