@@ -22,9 +22,9 @@ const Navbar: React.FC = () => {
   }, []);
   const logoutHandler=async function logout() {
     try {
-      const response=await axios.get("http://localhost:5000/api/user/logout")
+      const response=await axios.get("http://localhost:5000/api/user/logout",{withCredentials:true})
       alert(response.data.message);
-      window.location.reload()
+      setUser(null);
     } catch (error) {
       console.error('Something Wrong',error);
     }
