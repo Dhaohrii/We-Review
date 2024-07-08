@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 const Navbar: React.FC = () => {
   const [user, setUser] = useState<any>(null); // Adjusted to any for flexibility
-
   useEffect(() => {
     const checkLoginStatus = async () => {
       try {
@@ -21,6 +20,15 @@ const Navbar: React.FC = () => {
 
     checkLoginStatus();
   }, []);
+  const logoutHandler=async function logout() {
+    try {
+      const response=await axios.get("http://localhost:5000/api/user/logout")
+      alert(response.data.message);
+      window.location.reload()
+    } catch (error) {
+      console.error('Something Wrong',error);
+    }
+  }
   return (
     <nav className="navbar">
       <div className="navbar-container">
@@ -82,8 +90,8 @@ const Navbar: React.FC = () => {
             <Link href="/profile" passHref>
               <p className="navbar-auth-item">Profile</p>
             </Link>
-            <Link href="/logout" passHref>
-              <p className="navbar-auth-item">Logout</p>
+            <Link href="/" passHref>
+              <p className="navbar-auth-item" onClick={logoutHandler} >Logout</p>
             </Link>
           </div>
         )}
