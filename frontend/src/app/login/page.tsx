@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
 
       if (response.status === 200) {
         // Redirect to home page upon successful login
-        router.push('/');
+      window.location.assign("http://localhost:3000/")
       }
 
     } catch (error: any) {
