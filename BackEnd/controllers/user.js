@@ -74,6 +74,7 @@ const {getToken}=require('./jwtGen.js');
             console.error("Internal server error:", error);
             res.status(500).json({ error: 'Internal server error' });
         }
+        
     }
     async function getUserInfo(req, res) {
         try {
@@ -117,4 +118,16 @@ const {getToken}=require('./jwtGen.js');
         }
     }
 
+    async function getUserById(req, res) {
+        const userId = req.params.id;
+    
+        model.getById(userId, function(err, results) {
+          if (err) {
+            console.error(`Error fetching user with ID ${userId}:`, err.message);
+            res.status(500).json({ error: `Failed to fetch user with ID ${userId}` });
+            return;
+          }
+          res.status(200).json(results);
+        });
+      }
 module.exports = { createUser, checkLogin , logout, getUserInfo, updateUserInfo};

@@ -2,7 +2,9 @@ const express = require('express');
 const route = express.Router();
 const multer = require('multer');
 const cloudinary = require('../cloudinary/cloudinary');
+
 const { createUser, checkLogin, logout, getUserInfo, updateUserInfo } = require('../controllers/user');
+
 const userCheck = require("../controllers/LogonChecker");
 
 // Configure Multer to store files in memory
@@ -45,7 +47,7 @@ route.post('/add', upload.single('photo'), createUser);
 
 route.post('/login', checkLogin);
 route.get('/logout',logout);
-
+route.get('/get/:id',getUserById)
 route.get("/isloged", userCheck, (req, res) => {
   res.status(200).json({ user: req.user });
 });

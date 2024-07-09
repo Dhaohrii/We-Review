@@ -54,6 +54,7 @@ addUser(userData, callback) {
       callback(null, results);
     });
   },
+
   updateUser(id, user, callback) {
     const { fullname,email,password,phonenumber,photo } = user;
     const query = 'UPDATE user SET fullname = ?, email = ?, password = ?, phonenumber = ?, photo = ? WHERE id = ?';
@@ -69,4 +70,16 @@ addUser(userData, callback) {
       callback(null, results);
     });
   },
+  getById(id, callback) {
+    const query = 'SELECT * FROM user WHERE id = ?';
+    db.query(query, [id], (err, results) => {
+      if (err) {
+        console.error(`Error fetching user by ID ${id}:`, err.message);
+        callback(err, null);
+        return;
+      }
+      console.log(`user fetched by ID ${id} successfully:`, results);
+      callback(null, results);
+    });
+  }
 }
