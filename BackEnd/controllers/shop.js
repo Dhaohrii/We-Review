@@ -24,6 +24,18 @@ module.exports = {
       res.status(200).json(results);
     });
   },
+  getShopByShopOwnerId: function(req, res) {
+    const shopOwner_Id = req.params.shopOwner_id;
+
+    shop.getById(shopId, function(err, results) {
+      if (err) {
+        console.error(`Error fetching shop with ID ${shopOwner_id}:`, err.message);
+        res.status(500).json({ error: `Failed to fetch shop with ID ${shopOwner_id}` });
+        return;
+      }
+      res.status(200).json(results);
+    });
+  },
 
 
   addshop: function(req, res) {

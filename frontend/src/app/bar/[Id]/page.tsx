@@ -1,5 +1,4 @@
-"use client"
-
+"use client" 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Shop } from '../../../contexts/shopsContext';
@@ -12,11 +11,26 @@ const BarDetailPage: React.FC = () => {
 
   const [bar, setBar] = useState<Shop | null>(null);
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
-  const [likeCount, setLikeCount] = useState<number>(0); // Initialize likeCount state
-  const [dislikeCount, setDislikeCount] = useState<number>(0); // Initialize dislikeCount state
-  const [liked, setLiked] = useState<boolean | null>(null); // To track if user liked or disliked
-  const [comments, setComments] = useState<string[]>([]); // State to hold comments
-  const [newComment, setNewComment] = useState<string>(''); // State for new comment input
+  const [likeCount, setLikeCount] = useState<number>(0);
+  const [dislikeCount, setDislikeCount] = useState<number>(0);
+  const [liked, setLiked] = useState<boolean | null>(null);
+  const [comments, setComments] = useState<{ client: { fullname: string }[]; comment: string }[]>([]);
+  const [newComment, setNewComment] = useState<string>('');
+  const [user, setUser] = useState<any>(null);
+
+  useEffect(() => {
+    const checkLoginStatus = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/user/isloged', { withCredentials: true });
+        setUser(response.data.user);
+      } catch (error) {
+        console.error('Error checking login status:', error);
+        setUser(null);
+      }
+    };
+
+    checkLoginStatus();
+  }, []);
 
   useEffect(() => {
     const fetchBar = async () => {
@@ -25,8 +39,8 @@ const BarDetailPage: React.FC = () => {
         if (response.data.length > 0) {
           const fetchedBar = response.data[0];
           setBar(fetchedBar);
-          setLikeCount(fetchedBar.like); // Set initial like count
-          setDislikeCount(fetchedBar.dislike); // Set initial dislike count
+          setLikeCount(fetchedBar.like);
+          setDislikeCount(fetchedBar.dislike);
         } else {
           console.error(`No bar found with id ${barId}`);
         }
@@ -38,13 +52,31 @@ const BarDetailPage: React.FC = () => {
     const fetchComments = async () => {
       try {
         const response = await axios.get(`http://localhost:5000/api/comments/get/${barId}`);
-        console.log(response.data)
-        setComments(response.data.map((el: any) => el.comment)); // Ensure comment_text matches API response
+        // Map over comments and fetch user details for each comment
+
+        const commentData = await Promise.all(response.data.map(async (el: any) => {
+          try {
+            // Fetch user details using user_id
+            const clientResponse = await axios.get(`http://localhost:5000/api/user/get/${el.id_user}`);
+            const client = clientResponse.data; // Assuming user data includes fullname
+            return {
+              client: client,
+              comment: el.comment
+            };
+          } catch (error) {
+            console.error('Error fetching user details for comment:', error);
+            return {
+              client: 'Unknown', // Default value if fullname fetch fails
+              comment: el.comment
+            };
+          }
+        }));
+        setComments(commentData);
       } catch (error) {
         console.error('Error fetching comments:', error);
       }
     };
-
+    
     if (barId) {
       fetchBar();
       fetchComments();
@@ -59,7 +91,7 @@ const BarDetailPage: React.FC = () => {
     try {
       const updatedLike = increment ? likeCount + 1 : likeCount;
       await axios.put(`http://localhost:5000/api/shop/like/${barId}`, { like: updatedLike });
-      setLikeCount(updatedLike); // Update local state after successful API update
+      setLikeCount(updatedLike);
       console.log('Like updated successfully!');
     } catch (error) {
       console.error('Error updating like:', error);
@@ -70,7 +102,7 @@ const BarDetailPage: React.FC = () => {
     try {
       const updatedDislike = dislikeCount + 1;
       await axios.put(`http://localhost:5000/api/shop/dislike/${barId}`, { dislike: updatedDislike });
-      setDislikeCount(updatedDislike); // Update local state after successful API update
+      setDislikeCount(updatedDislike);
       console.log('Dislike updated successfully!');
     } catch (error) {
       console.error('Error updating dislike:', error);
@@ -80,14 +112,14 @@ const BarDetailPage: React.FC = () => {
   const handleLike = () => {
     if (liked === null) {
       setLiked(true);
-      updateLikeInDatabase(true); // Increment the like count
+      updateLikeInDatabase(true);
     }
   };
 
   const handleDislike = () => {
     if (liked === null) {
       setLiked(false);
-      updateDislikeInDatabase(); // Update without incrementing
+      updateDislikeInDatabase();
     }
   };
 
@@ -102,20 +134,25 @@ const BarDetailPage: React.FC = () => {
   const handleSubmitComment = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/comments/add', {
-        id_shop: barId, // Ensure this matches your backend's expected field name for shopId
-        // id_user:userId 
+      const response = await axios.post('http://localhost:5000/api/comments/add', {
+        id_shop: barId,
+        id_user: user.id,
         comment: newComment,
       });
-      // Assuming your backend returns the inserted comment, you can update state like this:
-      setComments([...comments, { comment_text: newComment }]); // Update local state with new comment object
-      setNewComment(''); // Clear the input field
+      // Fetch user details for the current user
+      const clientResponse = await axios.get(`http://localhost:5000/api/user/get/${user.id}`);
+      const currentClient = clientResponse.data;
+      // Add the new comment with user details
+      setComments([...comments, {
+        client: currentClient, // Assign user object to client
+        comment: newComment
+      }]);
+      setNewComment('');
       console.log('Comment added successfully!');
     } catch (error) {
       console.error('Error adding comment:', error);
     }
   };
-
 
   if (!bar) {
     return <div>Loading...</div>;
@@ -144,7 +181,8 @@ const BarDetailPage: React.FC = () => {
                 className="menu-image"
                 onClick={() => handleImageClick(item)}
               />
-              <p>{/* Display item details here */}</p>
+              {/* Display item details here */}
+              {/* Replace this placeholder with actual item details */}
             </div>
           ))}
         </div>
@@ -164,13 +202,13 @@ const BarDetailPage: React.FC = () => {
             <span role="img" aria-label="thumbs up">
               👍
             </span>
-            <div className="thumbs-count">{likeCount}</div> {/* Display like count */}
+            <div className="thumbs-count">{likeCount}</div>
           </div>
           <div className="thumbs-down" onClick={handleDislike}>
             <span role="img" aria-label="thumbs down">
               👎
             </span>
-            <div className="thumbs-count">{dislikeCount}</div> {/* Display dislike count */}
+            <div className="thumbs-count">{dislikeCount}</div>
           </div>
         </div>
       </div>
@@ -178,7 +216,24 @@ const BarDetailPage: React.FC = () => {
         <h3>Comments</h3>
         <ul>
           {comments.map((el, index) => (
-            <li key={index}>{el}</li>
+            <li key={index} className="comment">
+              {/* Display user photo if available */}
+              {user && user.photo && (
+                <img src={user.photo} alt={user.fullname} />
+              )}
+              <div className="comment-details">
+                {/* Display user fullname */}
+                {Array.isArray(el.client) ? (
+                  el.client.map((userObj, idx) => (
+                    <p key={idx} className="comment-client">{userObj.fullname}</p>
+                  ))
+                ) : (
+                  <p className="comment-client">{el.client.fullname}</p>
+                )}
+                {/* Display comment */}
+                <p>{el.comment}</p>
+              </div>
+            </li>
           ))}
         </ul>
         <form onSubmit={handleSubmitComment}>
@@ -197,7 +252,6 @@ const BarDetailPage: React.FC = () => {
           <img src={enlargedImage} alt="Enlarged menu item" />
         </div>
       )}
-      {/* Add more details as needed */}
     </div>
   );
 };

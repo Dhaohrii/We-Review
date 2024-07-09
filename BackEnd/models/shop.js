@@ -42,6 +42,18 @@ module.exports = {
       callback(null, results);
     });
   },
+  getByShopOwnerId(shopOwner_id, callback) {
+    const query = 'SELECT * FROM shop WHERE shopOwner_id = ?';
+    conn.query(query, [shopOwner_id], (err, results) => {
+      if (err) {
+        console.error(`Error fetching shop by ID ${shopOwner_id}:`, err.message);
+        callback(err, null);
+        return;
+      }
+      console.log(`Shop fetched by ID ${shopOwner_id} successfully:`, results);
+      callback(null, results);
+    });
+  },
 
   update(id, shop, callback) {
     const { name, category, description, address, video, menu, logo, like, dislike } = shop;

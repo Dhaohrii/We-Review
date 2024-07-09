@@ -26,6 +26,18 @@ db.query(sql,email,(err,results)=>{
     return callback(null,results)
 })
 },   
+getUserById:function (id){
+  return new Promise((resolve, reject) => {
+    const sql = "SELECT * FROM `user` WHERE id=?";
+    db.query(sql, [id], (err, results) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve(results[0]); // Assuming 'results' is an array and you want the first item
+    });
+  });
+},
+
 // Method to add a new user to the database
 addUser(userData, callback) {
     const { fullname, email, password, phonenumber, role, photo } = userData;
@@ -39,6 +51,34 @@ addUser(userData, callback) {
         return;
       }
       console.log('User added to database successfully:', results);
+      callback(null, results);
+    });
+  },
+
+  updateUser(id, user, callback) {
+    const { fullname,email,password,phonenumber,photo } = user;
+    const query = 'UPDATE user SET fullname = ?, email = ?, password = ?, phonenumber = ?, photo = ? WHERE id = ?';
+    const params = [fullname,email,password,phonenumber,photo,id];
+  
+    db.query(query, params, (err, results, fields) => {
+      if (err) {
+        console.error(`Error updating user with ID ${id}:`, err.message);
+        callback(err, null);
+        return;
+      }
+      console.log(`user with ID ${id} updated successfully:`, results);
+      callback(null, results);
+    });
+  },
+  getById(id, callback) {
+    const query = 'SELECT * FROM user WHERE id = ?';
+    db.query(query, [id], (err, results) => {
+      if (err) {
+        console.error(`Error fetching user by ID ${id}:`, err.message);
+        callback(err, null);
+        return;
+      }
+      console.log(`user fetched by ID ${id} successfully:`, results);
       callback(null, results);
     });
   }
