@@ -1,0 +1,125 @@
+.coffee-detail {
+    max-width: 800px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.coffee-name {
+    font-size: 2.5em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+.coffee-logo {
+    width: 300px;
+    height: auto;
+    display: block;
+    margin: 20px auto;
+}
+.coffee-address,
+.coffee-description {
+    font-size: 1.1em;
+    margin: 15px 0;
+}
+.coffee-address-label,
+.coffee-description-label {
+    font-weight: bold;
+    color: #34495e;
+}
+.coffee-menu {
+    margin: 20px 0;
+}
+.menu-items {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.menu-item {
+    margin: 10px;
+}
+.menu-image {
+    max-width: 100px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: transform 0.2s;
+}
+.menu-image:hover {
+    transform: scale(1.1);
+}
+.coffee-video {
+    margin: 20px 0;
+}
+.thumbs-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.thumbs-up,
+.thumbs-down {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    margin: 0 10px;
+}
+.thumbs-up:hover,
+.thumbs-down:hover {
+    color: #007bff;
+}
+.thumbs-count {
+    margin-left: 5px;
+    font-weight: bold;
+}
+.comments-section {
+    margin-top: 30px;
+    text-align: left;
+}
+.comments-section h3 {
+    margin-bottom: 15px;
+    color: #2980b9;
+}
+.comment {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+.comment img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.comment-details {
+    background-color: #ecf0f1;
+    padding: 10px;
+    border-radius: 8px;
+    width: 100%;
+}
+.comment-client {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.image-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+}
+.image-overlay.active {
+    display: flex;
+}
+.image-overlay img {
+    max-width: 90%;
+    max-height: 90%;
+    border-radius: 8px;
+}
