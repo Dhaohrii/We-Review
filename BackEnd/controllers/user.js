@@ -75,5 +75,46 @@ const {getToken}=require('./jwtGen.js');
             res.status(500).json({ error: 'Internal server error' });
         }
     }
+    async function getUserInfo(req, res) {
+        try {
+          const id = req.params.id;
+          const user = await model.getUserById(id);
+          if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+          }
+          res.status(200).json(user);
+        } catch (error) {
+          console.error('Error fetching user information:', error.message);
+          res.status(500).json({ error: 'Failed to fetch user information' });
+        }
+      }
+      
+      async function updateUserInfo(req, res) {
+        try {
+          const userId = req.user.id;
+          const updatedData = { ...req.body };
+      
+          if (req.file) {
+            const result = await new Promise((resolve, reject) => {
+              cloudinary.uploader.upload_stream({ resource_type: 'image' }, { upload_preset: 'profile', public_id: 'avatar', allowed_formats: ['png', 'jpg', 'jpeg', 'tif'] }, (error, result) => {
+                if (error) reject(new Error('Cloudinary upload failed'));
+                else resolve(result);
+              }).end(req.file.buffer);
+            });
+            updatedData.photo = result.secure_url;
+          }
+      
+          if (updatedData.password) {
+            const hash = await bcrypt.hash(updatedData.password, 10);
+            updatedData.password = hash;
+          }
+      
+          await model.updateUser(userId, updatedData);
+          res.status(200).json({ message: 'User information updated successfully' });
+        } catch (error) {
+          console.error('Error updating user information:', error.message);
+          res.status(500).json({ error: 'Failed to update user information' });
+        }
+    }
 
-module.exports = { createUser, checkLogin , logout};
+module.exports = { createUser, checkLogin , logout, getUserInfo, updateUserInfo};
